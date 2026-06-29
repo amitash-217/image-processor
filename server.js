@@ -55,9 +55,11 @@ app.post(
                 }
             );
 
+            const downloadUrl = await minio.presignedGetObject(BUCKET, objectKey, 3600);
+
             res.json({
                 success: true,
-                objectKey,
+                downloadUrl,
             });
         } catch (err) {
             console.error(err);

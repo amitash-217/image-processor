@@ -25,6 +25,7 @@ app.post(
     upload.single("image"),
     async (req, res) => {
         try {
+            const downloadUrlReq = req.query.download == "true"
             if (!req.file) {
                 return res.status(400).json({
                     error: "No image uploaded",
@@ -55,12 +56,19 @@ app.post(
                 }
             );
 
-            const downloadUrl = await minio.presignedGetObject(BUCKET, objectKey, 3600);
+            if (downloadUrlReq) {
+                const downloadUrl = await minio.presignedGetObject(BUCKET, objectKey, 3600);
 
-            res.json({
-                success: true,
-                downloadUrl,
-            });
+                res.json({
+                    success: true,
+                    downloadUrl,
+                });
+            } else {
+                res.json({
+                    success: true,
+                    objectKey,
+                });
+            }
         } catch (err) {
             console.error(err);
 

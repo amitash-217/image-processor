@@ -34,12 +34,8 @@ app.post(
 
             const compressed = await sharp(req.file.buffer)
                 .rotate()
-                .resize({
-                    width: 2000,
-                    withoutEnlargement: true,
-                })
                 .avif({
-                    quality: 60,
+                    quality: 90,
                     effort: 6,
                 })
                 .toBuffer();

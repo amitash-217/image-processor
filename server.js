@@ -35,8 +35,8 @@ app.post(
             const compressed = await sharp(req.file.buffer)
                 .rotate()
                 .avif({
-                    quality: 90,
-                    effort: 6,
+                    quality: 82,
+                    effort: 4,
                 })
                 .toBuffer();
 
